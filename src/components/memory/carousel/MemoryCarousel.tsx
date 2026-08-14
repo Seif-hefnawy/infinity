@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Memory } from '@/data/memories';
-import Image from 'next/image';
+import { useEffect, useRef, useState } from "react";
+import { Memory } from "@/data/memories";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface MemoryCarouselProps {
   memories: Memory[];
@@ -12,6 +13,16 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const router = useRouter();
+
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const nextSlide = () => {
     if (currentIndex === memories.length - 1) return;
@@ -27,7 +38,6 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
     setCurrentIndex(index);
   };
 
-  // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -48,8 +58,8 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
   };
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto perspective:1000px perspective-origin:[center_center]">
-      <div 
+    <div className="relative w-full max-w-5xl mx-auto" style={{ perspective: "1000px", perspectiveOrigin: "center center" }}>
+      <div
         className="relative flex items-center justify-center min-h-[400px] md:min-h-[500px]"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -60,7 +70,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
           const isActive = offset === 0;
           const isLeft = offset === -1 || (currentIndex === 0 && index === memories.length - 1);
           const isRight = offset === 1 || (currentIndex === memories.length - 1 && index === 0);
-          
+
           let scale = 0.6;
           let rotateY = 0;
           let translateX = 0;
@@ -103,15 +113,19 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
               key={memory.id}
               className="absolute transition-all duration-700 ease-in-out cursor-pointer"
               style={{
-                transform: `scale(${scale}) rotateY(${rotateY}deg) translateX(${translateX}px) translateZ(${translateZ}px)`,
+                transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                 opacity,
                 zIndex,
-                transformStyle: 'preserve-3d',
-                width: '320px',
-                height: '400px',
+                transformStyle: "preserve-3d",
+                width: "320px",
+                height: "400px",
               }}
               onClick={() => {
-                if (!isActive) {
+                if (isActive) {
+                  if (isMountedRef.current) {
+                    router.push(`/inf/${memory.slug}`);
+                  }
+                } else {
                   goToSlide(index);
                 }
               }}
@@ -146,7 +160,9 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-ruby' : 'w-2 bg-ruby/30 hover:bg-ruby/50'}`}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex ? "w-8 bg-ruby" : "w-2 bg-ruby/30 hover:bg-ruby/50"
+            }`}
           />
         ))}
       </div>

@@ -68,18 +68,7 @@ export default function WelcomePage() {
         {/* Gradient Border Effect */}
         <div className="absolute -inset-0.5 bg-linear-to-br from-ruby/30 via-roseIvory to-ruby/20 rounded-3xl blur-sm" />
         
-        <div className="
-          bg-white/80 backdrop-blur-xl
-          rounded-3xl md:rounded-4xl
-          p-8 md:p-10
-          shadow-2xl
-          border border-white/30
-          relative
-          overflow-hidden
-          transform-gpu
-          perspective-1000
-          rotate-x-2
-        ">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl md:rounded-4xl p-8 md:p-10 shadow-2xl border border-white/30 relative overflow-hidden transform-gpu perspective-1000 rotate-x-2">
           {/* 3D Depth Effects */}
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-ruby/5 rounded-full blur-2xl" />
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-ruby/5 rounded-full blur-2xl" />

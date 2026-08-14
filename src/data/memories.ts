@@ -15,7 +15,10 @@ export const memories: Memory[] = [
     slug: 'our-first-date',
     title: 'Our First Date',
     date: '14 February 2025',
+    
     image: '/images/memories/img1.jpg',
+    spotifyUrl:
+  'https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=abc123',
     story:
       'I still remember how nervous we both were that day. We talked for hours, laughed about the smallest things, and somehow the evening felt much shorter than it really was. It was just a simple day, but it became the beginning of so many beautiful memories.',
     specialMessage:

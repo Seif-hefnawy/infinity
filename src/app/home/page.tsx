@@ -6,10 +6,12 @@ import { useState } from 'react';
 import { memories } from '@/data/memories';
 import MemoryCarousel from '@/components/memory/carousel/MemoryCarousel';
 import PageTransition from '@/components/shared/PageTransition';
-import SecretSection from './SecretSection';
 
-const FallingRoses = dynamic(() => import('@/components/shared/FallingRoses'), {
+const SecretSection = dynamic(() => import('./SecretSection'), {
   ssr: false,
+});
+const FallingRoses = dynamic(() => import('@/components/shared/FallingRoses'), {
+ 
 });
 
 export default function HomePage() {
@@ -27,7 +29,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-roseIvory relative overflow-hidden">
       {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-roseIvory via-ruby/5 to-roseIvory animate-gradient" />
+      <div className="absolute inset-0 bg-linear-to-br from-roseIvory via-ruby/5 to-roseIvory animate-gradient" />
 
       {/* Falling Roses */}
       <FallingRoses />
@@ -102,27 +104,11 @@ export default function HomePage() {
         {showSecret && (
           <div
             className={`
-              mt-12
-              transition-all duration-700 ease-out
-              ${secretVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-            `}
-          >
+              mt-12 transition-all duration-700 ease-out ${secretVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} `}>
             <SecretSection />
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 8s ease infinite;
-        }
-      `}</style>
     </div>
   );
 }
