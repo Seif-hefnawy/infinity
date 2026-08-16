@@ -3,6 +3,7 @@
 
 import { useMemo, useState } from 'react';
 import { memories } from '@/data/memories';
+import PageTransition from '@/components/shared/PageTransition';
 
 type Stage = 'locked' | 'unlocked' | 'open';
 
@@ -75,19 +76,19 @@ export default function SecretSection() {
       <div className="relative z-10 text-center">
         {/* ===== LOCKED ===== */}
         {stage === 'locked' && (
-          <div className="animate-fade-in">
-            <div className="mb-6 text-xl text-[#9c4b67]/70">✦</div>
+          <PageTransition stages={8} delay={150} initialDelay={50}>
+            <div key="icon" className="mb-6 text-xl text-[#9c4b67]/70">✦</div>
 
-            <p className="font-serif text-3xl text-[#7d1635] md:text-5xl">
+            <p key="title" className="font-serif text-3xl text-[#7d1635] md:text-5xl">
               One Last Thing...
             </p>
 
-            <p className="mt-4 font-serif text-lg italic text-[#a45b73] md:text-xl">
+            <p key="sub" className="mt-4 font-serif text-lg italic text-[#a45b73] md:text-xl">
               The day it all began.
             </p>
 
             {/* Day Selector */}
-            <div className="mt-8">
+            <div key="day" className="mt-8">
               <p className="text-sm text-[#a45b73]">Day</p>
               <div className="mt-2 flex flex-wrap justify-center gap-2">
                 {Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0')).map((day) => (
@@ -107,7 +108,7 @@ export default function SecretSection() {
             </div>
 
             {/* Month Selector */}
-            <div className="mt-6">
+            <div key="month" className="mt-6">
               <p className="text-sm text-[#a45b73]">Month</p>
               <div className="mt-2 flex flex-wrap justify-center gap-2">
                 {monthNames.map((month, index) => {
@@ -130,9 +131,9 @@ export default function SecretSection() {
             </div>
 
             {/* Error */}
-            <div className="h-7 mt-4">
+            <div key="error" className="h-7 mt-4">
               {error && (
-                <p className="text-sm text-[#9c3657] animate-fade-in">
+                <p className="text-sm text-[#9c3657]">
                   Not quite... Try again.
                 </p>
               )}
@@ -140,6 +141,7 @@ export default function SecretSection() {
 
             {/* Unlock Button */}
             <button
+              key="unlock"
               onClick={handleUnlock}
               disabled={!selectedDay || !selectedMonth}
               className="mt-4 rounded-full bg-[#7d1635] px-8 py-3 font-serif text-white shadow-lg shadow-[#7d1635]/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-30 active:scale-95"
@@ -147,27 +149,28 @@ export default function SecretSection() {
               Unlock
             </button>
 
-            <p className="mt-6 text-xs tracking-wide text-[#a45b73]/60">
+            <p key="hint" className="mt-6 text-xs tracking-wide text-[#a45b73]/60">
               Select the day and month of your first memory.
             </p>
-          </div>
+          </PageTransition>
         )}
 
         {/* ===== UNLOCKED ===== */}
         {stage === 'unlocked' && (
-          <div className="animate-secret-reveal">
-            <div className="mb-6 text-2xl text-[#9c4b67]">✦</div>
+          <PageTransition stages={5} delay={150} initialDelay={50}>
+            <div key="icon" className="mb-6 text-2xl text-[#9c4b67]">✦</div>
 
-            <p className="font-serif text-2xl italic text-[#a45b73] md:text-3xl">
+            <p key="title" className="font-serif text-2xl italic text-[#a45b73] md:text-3xl">
               You found it.
             </p>
 
-            <p className="mt-4 font-serif text-lg text-[#7d1635] md:text-xl">
+            <p key="sub" className="mt-4 font-serif text-lg text-[#7d1635] md:text-xl">
               There&apos;s one more thing waiting for you.
             </p>
 
             {/* Envelope */}
             <button
+              key="envelope"
               onClick={handleOpenLetter}
               className="group mx-auto mt-12 block"
             >
@@ -179,18 +182,18 @@ export default function SecretSection() {
               </div>
             </button>
 
-            <p className="mt-6 text-xs uppercase tracking-[0.25em] text-[#a45b73]/60">
+            <p key="hint" className="mt-6 text-xs uppercase tracking-[0.25em] text-[#a45b73]/60">
               A little message for you
             </p>
-          </div>
+          </PageTransition>
         )}
 
         {/* ===== LETTER OPEN ===== */}
         {stage === 'open' && (
-          <div className="animate-letter-open">
-            <div className="mx-auto max-w-2xl">
-              <div className="mb-6 text-2xl text-[#9c4b67]">✦</div>
+          <PageTransition stages={4} delay={150} initialDelay={50}>
+            <div key="icon" className="mb-6 text-2xl text-[#9c4b67]">✦</div>
 
+            <div key="card" className="mx-auto max-w-2xl">
               <div className="relative rounded-[32px] border border-[#a45b73]/15 bg-white/50 px-8 py-14 shadow-[0_30px_100px_rgba(125,22,53,0.10)] backdrop-blur-xl md:px-16 md:py-20">
                 <p className="text-xs uppercase tracking-[0.35em] text-[#a45b73]">
                   Just For You
@@ -208,14 +211,14 @@ export default function SecretSection() {
                   Forever yours. ❤️
                 </p>
               </div>
-
-              <p className="mt-8 font-serif text-sm italic text-[#a45b73]/70">
-                Some things are meant to be kept close.
-              </p>
-
-              <div className="mt-4 text-[#9c4b67]/60">✦</div>
             </div>
-          </div>
+
+            <p key="sub" className="mt-8 font-serif text-sm italic text-[#a45b73]/70">
+              Some things are meant to be kept close.
+            </p>
+
+            <div key="footer-icon" className="mt-4 text-[#9c4b67]/60">✦</div>
+          </PageTransition>
         )}
       </div>
     </section>

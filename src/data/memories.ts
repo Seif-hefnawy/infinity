@@ -6,6 +6,7 @@ export interface Memory {
   image: string;
   story: string;
   spotifyUrl?: string;
+   songTitle?: string;
   specialMessage: string;
 }
 
@@ -17,8 +18,8 @@ export const memories: Memory[] = [
     date: '14 February 2025',
     
     image: '/images/memories/img1.jpg',
-    spotifyUrl:
-  'https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT?si=abc123',
+    spotifyUrl:'https://open.spotify.com/embed/track/2PPN1HFpVotjq7oJIqQbnx?utm_source=generator',
+
     story:
       'I still remember how nervous we both were that day. We talked for hours, laughed about the smallest things, and somehow the evening felt much shorter than it really was. It was just a simple day, but it became the beginning of so many beautiful memories.',
     specialMessage:

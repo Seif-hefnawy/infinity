@@ -57,6 +57,12 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
     setTouchEnd(0);
   };
 
+  // دالة للتنقل عند الضغط على الزر
+  const handleReadStory = (slug: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    router.push(`/inf/${slug}`);
+  };
+
   return (
     <div className="relative w-full max-w-5xl mx-auto" style={{ perspective: "1000px", perspectiveOrigin: "center center" }}>
       <div
@@ -111,7 +117,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
           return (
             <div
               key={memory.id}
-              className="absolute transition-all duration-700 ease-in-out cursor-pointer"
+              className="absolute transition-all duration-700 ease-in-out"
               style={{
                 transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                 opacity,
@@ -121,13 +127,11 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
                 height: "400px",
               }}
               onClick={() => {
-                if (isActive) {
-                  if (isMountedRef.current) {
-                    router.push(`/inf/${memory.slug}`);
-                  }
-                } else {
+                // فقط تغيير الصورة إذا لم تكن نشطة
+                if (!isActive) {
                   goToSlide(index);
                 }
+                // إذا كانت نشطة، لا نقوم بأي شيء (لا تنقل)
               }}
             >
               <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white/10 backdrop-blur-sm">
@@ -135,6 +139,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
                   src={memory.image}
                   alt={memory.title}
                   fill
+                  priority
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
@@ -143,9 +148,12 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
                   <h3 className="font-heading text-2xl font-bold">{memory.title}</h3>
                   <p className="font-body text-white/80 text-sm mt-1">{memory.date}</p>
                   {isActive && (
-                    <div className="mt-3 inline-block px-4 py-2 rounded-full glass border border-white/30 text-sm font-heading">
+                    <button
+                      onClick={(e) => handleReadStory(memory.slug, e)}
+                      className="mt-3 inline-block px-4 py-2 rounded-full glass border border-white/30 text-sm font-heading cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-white/20"
+                    >
                       Tap to Read Story
-                    </div>
+                    </button>
                   )}
                 </div>
               </div>

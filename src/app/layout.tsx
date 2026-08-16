@@ -1,9 +1,11 @@
-
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Luxurious_Roman } from 'next/font/google';
 import './globals.css';
+import PageTransition from '@/components/shared/PageTransition';
+import ClientFallingRoses from "@/components/shared/ClientFallingRoses";
 
-const CormorantGaramond = Cormorant_Garamond({
+
+const cormorantGaramond = Cormorant_Garamond({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-heading',
@@ -25,12 +27,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
+   return (
     <html
       lang="ar"
-      className={`${CormorantGaramond.variable} ${luxuriousRoman.variable}`}
+      className={`${cormorantGaramond.variable} ${luxuriousRoman.variable}`}
     >
-      <body>{children}</body>
+      <body>
+      
+        
+        {/* الورود (هنضبط z-index عشان تظهر فوق الكل) */}
+        <div className="fixed inset-0 pointer-events-none z-50">
+          <ClientFallingRoses />
+        </div>
+
+        {children}
+      </body>
     </html>
   );
 };
