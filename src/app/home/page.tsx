@@ -1,14 +1,12 @@
 // src/app/(public)/home/page.tsx
 'use client';
 
-import dynamic from 'next/dynamic';
+
 import { useState } from 'react';
 import { memories } from '@/data/memories';
 import MemoryCarousel from '@/components/memory/carousel/MemoryCarousel';
 
-const SecretSection = dynamic(() => import('./SecretSection'), {
-  ssr: false,
-});
+import SecretSection from './SecretSection';
 
 export default function HomePage() {
   const [showSecret, setShowSecret] = useState(false);

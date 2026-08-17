@@ -105,7 +105,6 @@ html::-webkit-scrollbar {
     min-height: 100vh;
     overflow-x: hidden;
     overscroll-behavior: none;
-    -webkit-overflow-scrolling: touch;
   }
   ::-webkit-scrollbar {
     width: 6px;
