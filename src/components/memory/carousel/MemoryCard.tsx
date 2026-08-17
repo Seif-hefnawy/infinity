@@ -15,19 +15,10 @@ export default function MemoryCard({
 }: MemoryCardProps) {
   const router = useRouter();
 
-  const handleReadStory = (e: React.MouseEvent) => {
+  // الحدث الرئيسي: هيشتغل فوراً عند اللمس
+  const handleNavigate = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
-    router.push(`/inf/${memory.slug}`);
-  };
-
-  // منع انتشار حدث اللمس للكاروسيل (يمنع السحب من إلغاء الضغطة)
-  const handleTouchStart = (e: React.TouchEvent) => {
-    e.stopPropagation();
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault(); // ← مهم جداً عشان الكاروسيل مايلغيش الحدث
     router.push(`/inf/${memory.slug}`);
   };
 
@@ -56,7 +47,7 @@ export default function MemoryCard({
         className="
           absolute inset-0
           bg-linear-to-t from-ruby/80 via-ruby/30 to-transparent
-          flex items-end justify-center pb-8 md:pb-12
+          flex items-center justify-center
           transition-opacity duration-300
           opacity-100 md:opacity-0
           md:group-hover:opacity-100
@@ -64,9 +55,9 @@ export default function MemoryCard({
         "
       >
         <button
-          onClick={handleReadStory}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          onClick={handleNavigate}
+          onTouchStart={handleNavigate} // ← الحدث الأساسي للموبايل
+          onTouchEnd={(e) => e.preventDefault()} // ← منع أي سلوك افتراضي
           className="
             font-heading text-white text-lg md:text-xl
             px-6 py-3 rounded-full glass
@@ -76,6 +67,7 @@ export default function MemoryCard({
             pointer-events-auto cursor-pointer
             relative z-10
             touch-action:manipulation
+            select-none
           "
           type="button"
         >
