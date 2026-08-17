@@ -76,8 +76,8 @@ export default function SecretSection() {
       <div className="relative z-10 text-center">
         {/* ===== LOCKED ===== */}
         {stage === 'locked' && (
-          <PageTransition stages={8} delay={150} initialDelay={50}>
-            <div key="icon" className="mb-6 text-xl text-[#9c4b67]/70">✦</div>
+          <div>
+          <div key="icon" className="mb-6 text-xl text-[#9c4b67]/70">✦</div>
 
             <p key="title" className="font-serif text-3xl text-[#7d1635] md:text-5xl">
               One Last Thing...
@@ -152,12 +152,12 @@ export default function SecretSection() {
             <p key="hint" className="mt-6 text-xs tracking-wide text-[#a45b73]/60">
               Select the day and month of your first memory.
             </p>
-          </PageTransition>
+          </div>
         )}
 
         {/* ===== UNLOCKED ===== */}
         {stage === 'unlocked' && (
-          <PageTransition stages={5} delay={150} initialDelay={50}>
+          <div>
             <div key="icon" className="mb-6 text-2xl text-[#9c4b67]">✦</div>
 
             <p key="title" className="font-serif text-2xl italic text-[#a45b73] md:text-3xl">
@@ -185,12 +185,12 @@ export default function SecretSection() {
             <p key="hint" className="mt-6 text-xs uppercase tracking-[0.25em] text-[#a45b73]/60">
               A little message for you
             </p>
-          </PageTransition>
+          </div>
         )}
 
         {/* ===== LETTER OPEN ===== */}
         {stage === 'open' && (
-          <PageTransition stages={4} delay={150} initialDelay={50}>
+          <div>
             <div key="icon" className="mb-6 text-2xl text-[#9c4b67]">✦</div>
 
             <div key="card" className="mx-auto max-w-2xl">
@@ -218,7 +218,7 @@ export default function SecretSection() {
             </p>
 
             <div key="footer-icon" className="mt-4 text-[#9c4b67]/60">✦</div>
-          </PageTransition>
+          </div>
         )}
       </div>
     </section>
