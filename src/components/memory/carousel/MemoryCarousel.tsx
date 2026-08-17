@@ -52,9 +52,11 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
     if (touchStart - touchEnd > 50) {
       nextSlide();
     }
+
     if (touchStart - touchEnd < -50) {
       prevSlide();
     }
+
     setTouchStart(0);
     setTouchEnd(0);
   };
@@ -67,7 +69,10 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
   return (
     <div
       className="relative w-full max-w-5xl mx-auto"
-      style={{ perspective: "1000px", perspectiveOrigin: "center center" }}
+      style={{
+        perspective: "1000px",
+        perspectiveOrigin: "center center",
+      }}
     >
       <div
         className="relative flex items-center justify-center min-h-[400px] md:min-h-[500px]"
@@ -77,10 +82,13 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
       >
         {memories.map((memory, index) => {
           const offset = index - currentIndex;
+
           const isActive = offset === 0;
+
           const isLeft =
             offset === -1 ||
             (currentIndex === 0 && index === memories.length - 1);
+
           const isRight =
             offset === 1 ||
             (currentIndex === memories.length - 1 && index === 0);
@@ -125,7 +133,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
           return (
             <div
               key={memory.id}
-              className="absolute transition-[transform,opacity] duration-700 ease-in-out"
+              className="absolute transition-all duration-700 ease-in-out"
               style={{
                 transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                 opacity,
@@ -140,22 +148,27 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
                 }
               }}
             >
-              <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white/10">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white/10 backdrop-blur-sm">
                 <Image
                   src={memory.image}
                   alt={memory.title}
                   fill
-                  priority={index === currentIndex}
+                  priority
                   className="object-cover transition-transform duration-700 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-ruby/70 via-ruby/20 to-transparent" />
+
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                   <h3 className="font-heading text-2xl font-bold">
                     {memory.title}
                   </h3>
+
                   <p className="font-body text-white/80 text-sm mt-1">
                     {memory.date}
                   </p>
+
                   {isActive && (
                     <button
                       onClick={(e) => handleReadStory(memory.slug, e)}
