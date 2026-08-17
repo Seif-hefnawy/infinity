@@ -19,6 +19,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
 
   useEffect(() => {
     isMountedRef.current = true;
+
     return () => {
       isMountedRef.current = false;
     };
@@ -38,7 +39,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
     setCurrentIndex(index);
   };
 
-  // ===== دوال اللمس (بقت بسيطة وبتشتغل من أي كارت) =====
+  // ===== دوال اللمس =====
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
     setTouchEnd(e.targetTouches[0].clientX);
@@ -133,12 +134,18 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
           return (
             <div
               key={memory.id}
-              className="absolute transition-all duration-700 ease-in-out"
+              className="absolute transition-[transform,opacity] duration-700 ease-in-out"
               style={{
                 transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                 opacity,
                 zIndex,
                 transformStyle: "preserve-3d",
+
+                // Fix for mobile 3D compositing
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                willChange: "transform, opacity",
+
                 width: "320px",
                 height: "400px",
               }}

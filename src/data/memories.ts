@@ -55,10 +55,10 @@ export const memories: Memory[] = [
     },
 
     spotifyUrl:
-      "https://open.spotify.com/embed/track/EXAMPLE_TRACK_ID",
+      "https://open.spotify.com/embed/track/4BKC2HOGEqtYz2Xbgp9N1q",
   },
 
-  {
+{
     id: 3,
     slug: "a-special-day",
     title: "A Special Day",
@@ -79,4 +79,70 @@ export const memories: Memory[] = [
     spotifyUrl:
       "https://open.spotify.com/embed/track/EXAMPLE_TRACK_ID",
   },
+
+
+  {
+    id: 4,
+    slug: "Collage",
+    title: "First Day in Collage",
+    date: "2025-08-10",
+
+    // Carousel + Hero
+    image: "/images/memories/img4.jpg",
+
+    story:
+      "Some days feel ordinary while you are living them, but later you realize they were anything but ordinary. This was one of those days. Nothing had to be perfect for it to become one of the moments I never wanted to forget.",
+
+    // صورة واحدة داخل المحتوى
+    contentImage: {
+      src: "/images/memories/img3.jpg",
+      alt: "A special moment from that day",
+    },
+
+    spotifyUrl:
+      "https://open.spotify.com/embed/track/345lSp1DYHYk3owbmodz3c",
+  },
+  {
+    id: 5,
+    slug: "HoneyMoon",
+    title: "Paris",
+    date: "2025-08-10",
+
+    // Carousel + Hero
+    image: "/images/memories/img5.jpg",
+
+    story:
+      "Some days feel ordinary while you are living them, but later you realize they were anything but ordinary. This was one of those days. Nothing had to be perfect for it to become one of the moments I never wanted to forget.",
+
+    // صورة واحدة داخل المحتوى
+    contentImage: {
+      src: "/images/memories/img3.jpg",
+      alt: "A special moment from that day",
+    },
+
+    spotifyUrl:
+      "https://open.spotify.com/embed/track/4rf1NRUuO9jRXdRSvsYpHC",
+  },
+  {
+    id: 6,
+    slug: "First Kiss",
+    title: "London",
+    date: "2025-08-10",
+
+    // Carousel + Hero
+    image: "/images/memories/img6.jpg",
+
+    story:
+      "Some days feel ordinary while you are living them, but later you realize they were anything but ordinary. This was one of those days. Nothing had to be perfect for it to become one of the moments I never wanted to forget.",
+
+    // صورة واحدة داخل المحتوى
+    contentImage: {
+      src: "/images/memories/img3.jpg",
+      alt: "A special moment from that day",
+    },
+
+    spotifyUrl:
+      "https://open.spotify.com/embed/track/47KL0buSc2RfvEARcAwj3r",
+  },
+  
 ];
