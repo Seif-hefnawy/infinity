@@ -64,7 +64,7 @@ export default function HomePage() {
           </div>
 
           {/* ===== 5. Secret Trigger or Section ===== */}
-          {/* {!showSecret ? (
+          {!showSecret ? (
             <div className="mt-12 text-center">
               <button
                 onClick={handleRevealSecret}
@@ -79,30 +79,9 @@ export default function HomePage() {
             <div className="mt-12">
               <SecretSection />
             </div>
-          )} */}
-
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
+          )}
 
           
-
-          <div className="mt-12 text-center">TEST</div>
-          <div className="mt-12 text-center">TEST</div>
         </div>
       </div>
     </>
