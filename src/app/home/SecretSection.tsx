@@ -69,7 +69,7 @@ export default function SecretSection() {
   if (!firstMemory) return null;
 
   return (
-    <section className="relative w-full max-w-xl mx-auto px-4 py-8">
+    <section className="relative w-full  mx-auto px-4 py-8">
       {/* Decorative background glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-200/20 blur-[100px]" />
 

@@ -16,7 +16,7 @@ export default function StoryNavigation({
   return (
     <nav
       aria-label="Story navigation"
-      className="mx-auto mt-12 w-full max-w-3xl border-t border-[#8b1235]/10 pt-7 sm:mt-16 sm:pt-8"
+      className="mx-auto mb-5 mt-5 w-full max-w-3xl border-t border-[#8b1235]/10 pt-7 sm:mt-16 sm:pt-8"
     >
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-6">
 

@@ -17,7 +17,7 @@ export default function StoryUnfoldHero({
   image,
 }: StoryUnfoldHeroProps) {
   return (
-    <section className="relative h-screen w-full overflow-hidden lg:max-w-6xl lg:mx-auto">
+    <section className="relative h-screen w-full shadow-xl rounded mb- overflow-hidden lg:max-w-4xl lg:mx-auto">
       <motion.div
         initial={{ scale: 1.08, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -29,7 +29,7 @@ export default function StoryUnfoldHero({
           alt={title}
           fill
           priority
-          sizes="(max-width: 1024px) 100vw, 1152px"
+          sizes="100vw"
           className="h-full w-full object-cover"
         />
       </motion.div>

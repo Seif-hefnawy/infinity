@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Luxurious_Roman } from 'next/font/google';
 import './globals.css';
-import PageTransition from '@/components/shared/PageTransition';
+
 import ClientFallingRoses from "@/components/shared/ClientFallingRoses";
 
 

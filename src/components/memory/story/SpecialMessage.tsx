@@ -22,7 +22,7 @@ export default function SpecialMessage({
   });
 
   return (
-    <section className="px-5 py-20 sm:px-8">
+    <section className="px-5 py-3 sm:px-8">
       <div className="mx-auto max-w-6xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -30,10 +30,8 @@ export default function SpecialMessage({
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#8b1235]/45">
-            One little secret
-          </p>
-          <h2 className="mt-5 font-serif text-3xl text-[#68152f] sm:text-5xl">
+          
+          <h2 className="font-serif   text-2xl text-[#68152f] sm:text-3xl">
             Something was left here for you.
           </h2>
         </motion.div>
@@ -50,7 +48,7 @@ export default function SpecialMessage({
                 scale: 0.97,
                 transition: { duration: 0.45 },
               }}
-              className="mt-14"
+              className="mt-7"
             >
               <p className="font-serif text-sm italic text-[#8b1235]/55">
                 Find the hidden word.
@@ -103,7 +101,7 @@ export default function SpecialMessage({
                 transition={{ delay: 0.25, duration: 0.6 }}
                 className="relative"
               >
-                <span className="font-serif text-3xl text-[#8b1235]/55">✦</span>
+                <span className="font-serif text-2xl text-[#8b1235]/55">✦</span>
               </motion.div>
 
               {/* لو في عنوان، يظهر */}
@@ -112,7 +110,7 @@ export default function SpecialMessage({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
-                  className="relative mt- font-serif text-2xl text-[#68152f] sm:text-3xl"
+                  className="relative mt-2 font-serif text-sm italic text-[#8b1235]/55"
                 >
                   {songTitle}
                 </motion.p>
@@ -143,9 +141,9 @@ export default function SpecialMessage({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.7 }}
-                className="relative mt-5 font-serif text-sm italic text-[#8b1235]/55"
+                className="relative mt-5 font-serif italic  uppercase text-sm  text-[#8b1235]/55"
               >
-                Every memory has its own melody.
+                Just for You
               </motion.p>
             </motion.div>
           )}

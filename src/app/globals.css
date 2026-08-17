@@ -96,12 +96,16 @@ html::-webkit-scrollbar {
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
   }
   body {
     background-color: var(--color-roseIvory);
     font-family: var(--font-body);
     min-height: 100vh;
     overflow-x: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
   }
   ::-webkit-scrollbar {
     width: 6px;
