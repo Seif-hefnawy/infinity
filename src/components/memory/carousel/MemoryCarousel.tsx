@@ -15,9 +15,6 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
   const [touchEnd, setTouchEnd] = useState(0);
   const router = useRouter();
 
-  // Ref عشان نتذكر إذا كانت اللمسة بدأت على الكارت النشط أم لا
-  const isSwipingActiveCard = useRef(false);
-
   const isMountedRef = useRef(true);
 
   useEffect(() => {
@@ -41,63 +38,27 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
     setCurrentIndex(index);
   };
 
+  // ===== دوال اللمس (بقت بسيطة وبتشتغل من أي كارت) =====
   const handleTouchStart = (e: React.TouchEvent) => {
-    // تحديد الكارت اللي اتعملت عليه اللمسة
-    const target = e.target as HTMLElement;
-    const cardElement = target.closest('[data-index]');
-    
-    if (cardElement) {
-      const index = parseInt(cardElement.getAttribute('data-index') || '0', 10);
-      // إذا كان الكارت هو النشط (الوسطاني)، منع السويب
-      if (index === currentIndex) {
-        isSwipingActiveCard.current = false;
-      } else {
-        isSwipingActiveCard.current = true;
-      }
-    } else {
-      // لو لا قدر الله مش لاقي كارت، خلينا نمنع السويب عشان مانخربش
-      isSwipingActiveCard.current = false;
-    }
-
-    // تسجيل نقطة البداية (دايماً)
     setTouchStart(e.targetTouches[0].clientX);
-    setTouchEnd(e.targetTouches[0].clientX); // نمنع أي حركة قديمة
+    setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    // لو اللمسة بدأت على الكارت النشط، نتجاهل الحركة تماماً
-    if (!isSwipingActiveCard.current) {
-      return;
-    }
-    // لو الكارت وراني (مسموح بالسويب)، نحدّث نقطة النهاية
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const handleTouchEnd = () => {
-    // لو اللمسة بدأت على الكارت النشط، مننفذش أي سويب
-    if (!isSwipingActiveCard.current) {
-      // نرجع القيم للصفر عشان ما تسببش مشكلة بعدين
-      setTouchStart(0);
-      setTouchEnd(0);
-      isSwipingActiveCard.current = false;
-      return;
-    }
-
-    // هنا الكارت وراني، ننفذ السويب طبيعي
     if (touchStart - touchEnd > 50) {
       nextSlide();
     }
     if (touchStart - touchEnd < -50) {
       prevSlide();
     }
-
-    // إعادة تعيين القيم
     setTouchStart(0);
     setTouchEnd(0);
-    isSwipingActiveCard.current = false;
   };
 
-  // دالة للتنقل عند الضغط على الزر
   const handleReadStory = (slug: string, e: React.MouseEvent) => {
     e.stopPropagation();
     router.push(`/inf/${slug}`);
@@ -157,7 +118,6 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
           return (
             <div
               key={memory.id}
-              data-index={index} // ← إضافة data-index عشان نعرف الكارت
               className="absolute transition-all duration-700 ease-in-out"
               style={{
                 transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
