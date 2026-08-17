@@ -16,8 +16,16 @@ export default function MemoryCard({
   const router = useRouter();
 
   const handleReadStory = (e: React.MouseEvent) => {
-    e.stopPropagation(); // منع أي تأثير على العناصر الأب
+    e.stopPropagation();
     console.log("Button clicked:", memory.slug);
+    router.push(`/inf/${memory.slug}`);
+  };
+
+  // دعم إضافي للموبايل عشان يتجاوز أي تعارض من الـ Carousel
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault(); // يمنع المتصفح من انتظار حركة السحب (swipe)
+    e.stopPropagation();
+    console.log("Touch ended:", memory.slug);
     router.push(`/inf/${memory.slug}`);
   };
 
@@ -28,9 +36,9 @@ export default function MemoryCard({
         transition-all duration-300
         ${isCenter ? "shadow-strong hover:shadow-strong" : "shadow-soft"}
         glass-strong border border-white/20 backdrop-blur-lg
+        group
       `}
     >
-      {/* الصورة - غير قابلة للضغط */}
       <div className="relative w-full h-full select-none">
         <Image
           src={memory.image}
@@ -42,27 +50,30 @@ export default function MemoryCard({
         />
       </div>
 
-      {/* Overlay مع الزر - الزر هو العنصر الوحيد القابل للضغط */}
+      {/* Overlay + Button */}
       <div
         className="
           absolute inset-0
           bg-linear-to-t from-ruby/80 via-ruby/30 to-transparent
           flex items-end justify-center pb-8 md:pb-12
           transition-opacity duration-300
-          group-hover:opacity-100 opacity-0
+          opacity-100 md:opacity-0
+          md:group-hover:opacity-100
           pointer-events-none
         "
       >
         <button
           onClick={handleReadStory}
+          onTouchEnd={handleTouchEnd}
           className="
             font-heading text-white text-lg md:text-xl
             px-6 py-3 rounded-full glass
             transition-all duration-300
-            transform group-hover:scale-105
+            transform active:scale-95 md:group-hover:scale-105
             border border-white/30
             pointer-events-auto cursor-pointer
             relative z-10
+            touch-action:manipulation
           "
           type="button"
         >
