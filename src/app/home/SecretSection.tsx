@@ -81,7 +81,7 @@ export default function SecretSection() {
   return (
     <section className="relative w-full mx-auto px-4 py-8">
       {/* Decorative background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-200/20 blur-[50px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-75 w-75 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-200/20 blur-[50px]" />
 
       <div className="relative z-10 text-center">
 
@@ -236,7 +236,7 @@ export default function SecretSection() {
             </div>
 
             <div key="card" className="mx-auto max-w-2xl">
-              <div className="relative rounded-[32px] border border-[#a45b73]/15 bg-white/50 px-8 py-14 shadow-[0_30px_100px_rgba(125,22,53,0.10)] backdrop-blur-xl md:px-16 md:py-20">
+              <div className="relative rounded-4x1 border border-[#a45b73]/15 bg-white/50 px-8 py-14 shadow-[0_30px_100px_rgba(125,22,53,0.10)] backdrop-blur-xl md:px-16 md:py-20">
                 <p className="text-xs uppercase tracking-[0.35em] text-[#a45b73]">
                   Just For You
                 </p>

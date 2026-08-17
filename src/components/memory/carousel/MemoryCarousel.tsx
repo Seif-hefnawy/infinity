@@ -76,7 +76,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
       }}
     >
       <div
-        className="relative flex items-center justify-center min-h-[400px] md:min-h-[500px]"
+        className="relative flex items-center justify-center min-h-100 md:min-h"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -165,7 +165,7 @@ export default function MemoryCarousel({ memories }: MemoryCarouselProps) {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-ruby/70 via-ruby/20 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-ruby/70 via-ruby/20 to-transparent" />
 
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                   <h3 className="font-heading text-2xl font-bold">
