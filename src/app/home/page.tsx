@@ -1,12 +1,11 @@
 // src/app/(public)/home/page.tsx
-'use client';
+"use client";
 
+import { useState } from "react";
+import { memories } from "@/data/memories";
+import MemoryCarousel from "@/components/memory/carousel/MemoryCarousel";
 
-import { useState } from 'react';
-import { memories } from '@/data/memories';
-import MemoryCarousel from '@/components/memory/carousel/MemoryCarousel';
-
-import SecretSection from './SecretSection';
+import SecretSection from "./SecretSection";
 
 export default function HomePage() {
   const [showSecret, setShowSecret] = useState(false);
@@ -16,7 +15,7 @@ export default function HomePage() {
   };
 
   // ✅ للتأكد من وجود البيانات
-  console.log('Memories in HomePage:', memories);
+  console.log("Memories in HomePage:", memories);
 
   return (
     <>
@@ -33,7 +32,8 @@ export default function HomePage() {
                   Our Memories
                 </h1>
                 <p className="font-body text-white/90 text-sm md:text-base mt-3 max-w-lg drop-shadow">
-                  Every picture holds a memory. Tap any photo to relive the moment.
+                  Every picture holds a memory. Tap any photo to relive the
+                  moment.
                 </p>
                 <div className="w-20 h-1 bg-white/50 rounded-full mt-4" />
               </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
           </div>
 
           {/* ===== 5. Secret Trigger or Section ===== */}
-          {!showSecret ? (
+          {/* {!showSecret ? (
             <div className="mt-12 text-center">
               <button
                 onClick={handleRevealSecret}
@@ -79,7 +79,9 @@ export default function HomePage() {
             <div className="mt-12">
               <SecretSection />
             </div>
-          )}
+          )} */}
+
+          <div className="mt-12 text-center">TEST</div>
         </div>
       </div>
     </>
