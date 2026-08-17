@@ -17,15 +17,17 @@ export default function MemoryCard({
 
   const handleReadStory = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log("Button clicked:", memory.slug);
     router.push(`/inf/${memory.slug}`);
   };
 
-  // دعم إضافي للموبايل عشان يتجاوز أي تعارض من الـ Carousel
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    e.preventDefault(); // يمنع المتصفح من انتظار حركة السحب (swipe)
+  // منع انتشار حدث اللمس للكاروسيل (يمنع السحب من إلغاء الضغطة)
+  const handleTouchStart = (e: React.TouchEvent) => {
     e.stopPropagation();
-    console.log("Touch ended:", memory.slug);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     router.push(`/inf/${memory.slug}`);
   };
 
@@ -50,7 +52,6 @@ export default function MemoryCard({
         />
       </div>
 
-      {/* Overlay + Button */}
       <div
         className="
           absolute inset-0
@@ -64,6 +65,7 @@ export default function MemoryCard({
       >
         <button
           onClick={handleReadStory}
+          onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           className="
             font-heading text-white text-lg md:text-xl
