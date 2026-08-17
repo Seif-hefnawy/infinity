@@ -84,7 +84,7 @@ export const memories: Memory[] = [
   {
     id: 4,
     slug: "Collage",
-    title: "First Day in Collage",
+    title: "Wedding",
     date: "2025-08-10",
 
     // Carousel + Hero
@@ -105,7 +105,7 @@ export const memories: Memory[] = [
   {
     id: 5,
     slug: "HoneyMoon",
-    title: "Paris",
+    title: "First Day In Paris",
     date: "2025-08-10",
 
     // Carousel + Hero
@@ -125,7 +125,7 @@ export const memories: Memory[] = [
   },
   {
     id: 6,
-    slug: "First Kiss",
+    slug: "London",
     title: "London",
     date: "2025-08-10",
 
