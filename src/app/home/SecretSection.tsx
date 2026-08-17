@@ -71,7 +71,7 @@ export default function SecretSection() {
   return (
     <section className="relative w-full  mx-auto px-4 py-8">
       {/* Decorative background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-200/20 blur-[100px]" />
+      {/* <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-200/20 blur-[100px]" /> */}
 
       <div className="relative z-10 text-center">
         {/* ===== LOCKED ===== */}
