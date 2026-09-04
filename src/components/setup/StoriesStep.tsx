@@ -401,20 +401,18 @@ export default function StoriesStep({
           />
 
           {/* Story Date */}
-          <div className="space-y-2">
-            <label className="text-sm text-ruby/70">Story date</label>
-
-            <input
-              type="date"
-              value={story.date || ""}
-              onChange={(e) =>
-                updateStory(story.localId, {
-                  date: e.target.value,
-                })
-              }
-              className="w-full h-10 px-3 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
-            />
-          </div>
+          <input
+            type="date"
+            required
+            data-placeholder="Story Date"
+            value={story.date}
+            onChange={(e) =>
+              updateStory(story.localId, {
+                date: e.target.value,
+              })
+            }
+            className="story-date-input w-full h-10 px-3 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
+          />
 
           {/* Cover */}
           <StoryCoverUpload
