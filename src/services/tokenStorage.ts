@@ -13,6 +13,7 @@
 "use client";
 
 const ADMIN_TOKEN_KEY = "memory_admin_token";
+const MEMORY_SESSION_CHANGED = "memory-session-changed";
 
 export function getAdminToken(): string | null {
   if (typeof window === "undefined") return null;
@@ -57,6 +58,7 @@ function readSession(memoryId: string): MemorySession {
 function writeSession(memoryId: string, session: MemorySession): void {
   if (typeof window === "undefined") return;
   window.sessionStorage.setItem(storageKey(memoryId), JSON.stringify(session));
+  window.dispatchEvent(new CustomEvent(MEMORY_SESSION_CHANGED, { detail: memoryId }));
 }
 
 export function setMemoryToken(
@@ -80,4 +82,43 @@ export function getMemoryToken(memoryId: string, kind: MemoryTokenKind): string 
 export function clearMemorySession(memoryId: string): void {
   if (typeof window === "undefined") return;
   window.sessionStorage.removeItem(storageKey(memoryId));
+  window.dispatchEvent(new CustomEvent(MEMORY_SESSION_CHANGED, { detail: memoryId }));
+}
+
+/** Observe the existing view session without storing any published content. */
+export function subscribeMemorySession(memoryId: string, onChange: () => void): () => void {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  const checkSession = () => {
+    clearTimeout(timer);
+    onChange();
+    const expiresAt = readSession(memoryId).view?.expiresAt;
+    if (expiresAt && expiresAt > Date.now()) {
+      // Cap long timeouts at the browser's signed 32-bit timer limit.
+      timer = setTimeout(checkSession, Math.min(expiresAt - Date.now() + 1, 2_147_483_647));
+    }
+  };
+  const onSessionChange = (event: Event) => {
+    if ((event as CustomEvent<string>).detail === memoryId) checkSession();
+  };
+  const onStorage = (event: StorageEvent) => {
+    if (event.storageArea === window.sessionStorage &&
+        (event.key === null || event.key === storageKey(memoryId))) checkSession();
+  };
+
+  window.addEventListener(MEMORY_SESSION_CHANGED, onSessionChange);
+  window.addEventListener("storage", onStorage);
+  window.addEventListener("focus", checkSession);
+  window.addEventListener("pageshow", checkSession);
+  document.addEventListener("visibilitychange", checkSession);
+  checkSession();
+
+  return () => {
+    clearTimeout(timer);
+    window.removeEventListener(MEMORY_SESSION_CHANGED, onSessionChange);
+    window.removeEventListener("storage", onStorage);
+    window.removeEventListener("focus", checkSession);
+    window.removeEventListener("pageshow", checkSession);
+    document.removeEventListener("visibilitychange", checkSession);
+  };
 }

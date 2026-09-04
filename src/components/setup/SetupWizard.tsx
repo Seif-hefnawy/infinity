@@ -213,11 +213,7 @@ export default function SetupWizard({
   // ---------------------------------------------------------
 
   if (loading) {
-    return (
-      <div className="flex justify-center py-16">
-        <InfinityLoader />
-      </div>
-    );
+    return <InfinityLoader label="Loading your setup..." />;
   }
 
 
@@ -226,7 +222,7 @@ export default function SetupWizard({
   // ---------------------------------------------------------
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/30 shadow-xl">
+    <>
       {saveError && (
         <p className="text-error text-sm mb-4 text-center">
           {saveError}
@@ -272,6 +268,6 @@ export default function SetupWizard({
           error={pinError}
         />
       )}
-    </div>
+    </>
   );
 }

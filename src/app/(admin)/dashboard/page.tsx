@@ -96,11 +96,7 @@ export default function DashboardPage() {
   };
 
   if (isAuthLoading || !isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-roseIvory">
-        <InfinityLoader />
-      </div>
-    );
+    return <InfinityLoader variant="page" label="Opening your dashboard..." />;
   }
 
   const webhookUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/webhooks/shopify/orders-create`;
@@ -174,9 +170,7 @@ export default function DashboardPage() {
         {error && <p className="text-error text-sm font-body mb-4">{error}</p>}
 
         {!orders ? (
-          <div className="flex justify-center py-12">
-            <InfinityLoader />
-          </div>
+          !error && <InfinityLoader label="Loading orders..." />
         ) : orders.length === 0 ? (
           <p className="text-center font-body text-ruby/50 text-sm py-12">
             No orders yet - they&apos;ll appear here automatically as soon as

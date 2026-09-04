@@ -1,15 +1,31 @@
-import React from "react";
+interface InfinityLoaderProps {
+  /** Use page only when no page content can render before data/auth is ready. */
+  variant?: "section" | "page";
+  label?: string;
+  className?: string;
+}
 
-export default function PendulumLoader() {
+/** An in-flow status, never an overlay. The containing page owns its content. */
+export default function InfinityLoader({
+  variant = "section",
+  label = "Loading...",
+  className = "",
+}: InfinityLoaderProps) {
   return (
-    <>
-      {/* الطبقة الخلفية (overlay) */}
-      <div className="loader-overlay" />
-      
-      {/* اللودر في النص فوق الطبقة */}
-      <div className="loader-container">
-        <span className="loader-pendulum" />
+    <div
+      className={`loader-container loader-container--${variant} ${className}`}
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <div className="loader-indicator">
+        <div className="loader-motion" aria-hidden="true">
+          <span className="loader-pendulum" />
+        </div>
+        <p className={variant === "page" ? "sr-only" : "font-body text-ruby/60 text-sm text-center"}>
+          {label}
+        </p>
       </div>
-    </>
+    </div>
   );
 }

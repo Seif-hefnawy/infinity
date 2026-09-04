@@ -389,7 +389,7 @@ export default function StoryDataStep({
 
           <input
             type="text"
-            placeholder="https://open.spotify.com/embed/track/..."
+            placeholder="https://open.spotify.com/track/..."
             value={activeStory.spotify_url}
             onChange={(e) =>
               updateStory(activeStory.localId, {

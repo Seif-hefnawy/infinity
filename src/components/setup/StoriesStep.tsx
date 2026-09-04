@@ -403,6 +403,7 @@ export default function StoriesStep({
           {/* Story Date */}
           <input
             type="date"
+            placeholder="Story Date"
             value={story.date}
             onChange={(e) =>
               updateStory(story.localId, {

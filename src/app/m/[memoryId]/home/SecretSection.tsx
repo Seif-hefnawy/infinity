@@ -240,8 +240,8 @@ export default function SecretSection({ stories }: SecretSectionProps) {
               ✦
             </div>
 
-            <div key="card" className="mx-auto max-w-2xl">
-              <div className="relative rounded-4x1 border border-[#a45b73]/15 bg-white/50 px-8 py-14 shadow-[0_30px_100px_rgba(125,22,53,0.10)] backdrop-blur-xl md:px-16 md:py-20">
+            <div key="card" className="mx-auto max-w-2xl ">
+              <div className="relative rounded-xl border border-[#a45b73]/15 bg-white/50 px-8 py-14 shadow-[0_30px_100px_rgba(125,22,53,0.10)] backdrop-blur-xl md:px-16 md:py-20">
                 <p className="text-xs uppercase tracking-[0.35em] text-[#a45b73]">
                   Just For You
                 </p>

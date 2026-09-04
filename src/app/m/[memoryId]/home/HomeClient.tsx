@@ -27,7 +27,7 @@ export default function HomeClient({ memoryId, memory }: HomeClientProps) {
       <div className="relative z-10 px-6   max-w-4xl mx-auto">
         {/* ===== Cinematic Entrance ===== */}
         <PageTransition stages={6} delay={220} initialDelay={100}>
-          <div className="flex justify-center ">
+          {/* <div className="flex justify-center ">
             <Image
               src="/images/logo.png"
               alt="Infinity Logo"
@@ -36,7 +36,7 @@ export default function HomeClient({ memoryId, memory }: HomeClientProps) {
               className="mx-auto h-auto w-auto object-contain drop-shadow-lg"
 
             />
-          </div>
+          </div> */}
           {/* Stage 1: Hero */}
           <div key="hero" className="">
             <div className="ruby-gradient rounded-3xl md:rounded-4xl p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">

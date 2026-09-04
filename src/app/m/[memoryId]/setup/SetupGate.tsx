@@ -55,50 +55,44 @@ export default function SetupGate({ memoryId }: SetupGateProps) {
     }
   };
 
-  if (checkingResume) {
-    return (
-      <div className="flex justify-center py-16">
-        <InfinityLoader />
-      </div>
-    );
-  }
-
-  if (token) {
-    return <SetupWizard memoryId={memoryId} token={token} />;
-  }
-
   return (
     <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/30 shadow-xl">
-      <div className="space-y-5">
-        <div>
-          <h2 className="font-heading text-ruby text-lg">Verify it&apos;s you</h2>
-          <p className="text-xs text-ruby/50 mt-1">
-            Enter the email address used on your order. This confirms you&apos;re the
-            one setting up this Memory - not just anyone who found the link.
-          </p>
+      {checkingResume ? (
+        <InfinityLoader label="Opening your setup..." />
+      ) : token ? (
+        <SetupWizard memoryId={memoryId} token={token} />
+      ) : (
+        <div className="space-y-5">
+          <div>
+            <h2 className="font-heading text-ruby text-lg">Verify it&apos;s you</h2>
+            <p className="text-xs text-ruby/50 mt-1">
+              Enter the email address used on your order. This confirms you&apos;re the
+              one setting up this Memory - not just anyone who found the link.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-xs font-heading text-ruby/70 mb-1">Order email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full px-4 py-3 rounded-xl border border-ruby/20 bg-white/60 text-ruby text-sm focus:outline-none focus:border-ruby/50"
+            />
+          </div>
+
+          {error && <p className="text-error text-sm">{error}</p>}
+
+          <button
+            onClick={handleVerifyEmail}
+            disabled={isSubmitting}
+            className="w-full py-3 rounded-full ruby-gradient text-white font-heading text-sm shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Verifying..." : "Continue"}
+          </button>
         </div>
-
-        <div>
-          <label className="block text-xs font-heading text-ruby/70 mb-1">Order email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            className="w-full px-4 py-3 rounded-xl border border-ruby/20 bg-white/60 text-ruby text-sm focus:outline-none focus:border-ruby/50"
-          />
-        </div>
-
-        {error && <p className="text-error text-sm">{error}</p>}
-
-        <button
-          onClick={handleVerifyEmail}
-          disabled={isSubmitting}
-          className="w-full py-3 rounded-full ruby-gradient text-white font-heading text-sm shadow-lg hover:shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {isSubmitting ? "Verifying..." : "Continue"}
-        </button>
-      </div>
+      )}
     </div>
   );
 }

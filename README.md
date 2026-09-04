@@ -1,6 +1,6 @@
 # Infinity Memories
 
-A memory gift site: an **admin Dashboard** to register customers and hand
+A memory gift site: an **admin Dashboard** to view orders and hand
 out their unique links, and a **customer-facing flow** where the customer
 who received (or bought) the gift sets up their own memory - photos,
 stories, a PIN - by verifying the email their order used. Connected
@@ -9,18 +9,15 @@ requests inside UI components.
 
 ## Important: who does what
 
-This went through two corrections worth calling out explicitly, because
-they change who's responsible for what:
-
 - **The admin (Dashboard) does NOT enter customer/order data.** Orders
   arrive **automatically** the moment Shopify sends its `orders/create`
-  webhook to the backend - the Dashboard is a **read-only, auto-refreshing
-  view** of those orders (polls every 15 seconds) plus each customer's
-  unique link. There is no "Add Customer" form in the main UI.
+  webhook to the backend. The Dashboard polls those orders every 15 seconds,
+  shows each customer's unique link, and offers a destructive **Reset** action
+  with confirmation. There is no "Add Customer" form in the main UI.
 - **The admin does NOT create the memory's content either.** Their only
-  real job is: configure the Shopify webhook once (the Dashboard has a
+  tasks are: configure the Shopify webhook once (the Dashboard has a
   collapsible panel showing the exact URL to paste into Shopify), then
-  watch orders show up and hand out the links.
+  watch orders show up, hand out the links, and reset memories when needed.
 - **The customer sets up their own memory.** The first time they open
   their link, if it isn't set up yet, they land in the Setup wizard
   themselves - verifying the exact email their Shopify order used, then
@@ -36,37 +33,13 @@ exists in the services layer as a documented fallback for when Shopify is
 unreachable, but nothing in the UI calls it - the Dashboard always relies
 on the automatic sync.
 
-## What was reviewed before anything was changed
+## Integration history
 
-Before any code was touched, the entire project was read end-to-end: every
-page, every component, the mock data model (`data/memories.ts`), the dead
-`lib/db.ts` (referenced a `db.json` that didn't exist - never actually
-used anywhere), the routing (`(public)/`, `home/`, `inf/[slug]/`), and the
-scaffolded-but-empty `(admin)/dashboard` and `(setup)/setup/[token]`
-folders.
-
-## What changed, and what didn't
-
-**Preserved exactly:** every piece of visible UI on the customer-facing
-side, every animation, every className, every line of written copy ("A
-Special Memory Is Waiting For You", the SecretSection's day/month puzzle
-text, "I hope we never stop making memories worth remembering.", etc).
-`PinInput`, `NumericKeypad`, `WelcomeAnimation`, `FallingRoses`,
-`SectionLabel`, `CounterCard`, `SpecialMessage`, `StoryUnfoldHero` needed
-**zero** changes.
-
-**What had to change, and why:**
-- **Routing** — restructured from flat routes (`/`, `/home`, `/inf/[slug]`)
-  to `/m/[memoryId]/...`, matching the backend's actual data model.
-- **Data source** — every `import { memories } from "@/data/memories"` was
-  replaced with a real backend fetch through `src/services/`. `lib/db.ts`
-  and `data/memories.ts` were deleted.
-- **`StoryContent`** — extended to accept multiple images (up to 3)
-  instead of one, since the backend now supports that per story.
-- **`MemoryCarousel` / `StoryNavigation`** — same visuals, adapted to route
-  by story `id` instead of a `slug` (the backend has no slug concept).
-- **Dashboard and Setup wizard** — genuinely new (the existing
-  `(admin)/dashboard/page.tsx` was a bare placeholder).
+Earlier integration work replaced local mock data and flat Home/Story routes
+with backend services and `/m/[memoryId]/...` routes, and added the customer
+Setup wizard and Shopify order dashboard. Those old mock files and scaffold
+routes are no longer part of this project. The current loading and RAM cache
+behavior is documented in [Memory data and loading flow](docs/loading-system.md).
 
 ## Backend changes made to support this project
 
@@ -98,20 +71,22 @@ src/
 │   ├── apiClient.ts       # low-level fetch wrapper, error handling
 │   ├── memoryService.ts    # status check, PIN verify, published content
 │   ├── setupService.ts     # order-email verify, setup data, image upload, publish
-│   ├── adminService.ts     # admin login, register/list orders
+│   ├── adminService.ts     # admin login, orders, memory reset, API fallbacks
 │   └── tokenStorage.ts     # admin token + per-memory setup/view/edit tokens
 ├── types/                # TypeScript types mirroring the backend's actual JSON shapes
 ├── contexts/
-│   └── AdminAuthContext.tsx
+│   ├── AdminAuthContext.tsx
+│   └── PublishedMemoryContext.tsx   # shared RAM-only Home/Story data
 ├── components/
 │   ├── setup/              # the 3-step Setup wizard (customer-facing)
-│   ├── memory/, welcome/, shared/   # existing UI, adapted only where noted above
+│   ├── memory/, welcome/, shared/   # memory UI, PIN inputs, animations/loading
 └── app/
     ├── page.tsx             # redirects to /login
     ├── (admin)/
     │   ├── login/
-    │   └── dashboard/          # register a customer's order, list orders, copy links
+    │   └── dashboard/          # list orders, copy links, reset memories
     └── m/[memoryId]/
+        ├── layout.tsx                  # preserves the shared memory provider
         ├── page.tsx + PinGate.tsx     # entry point - redirects to /setup if NOT_SETUP
         ├── setup/ + SetupGate.tsx      # customer's OWN setup: email verify -> wizard
         ├── home/                       # after a correct PIN
@@ -141,7 +116,7 @@ src/
 3. **Step 1 - Stories** — up to 5 stories, each with a cover image, a
    name, and a date.
 4. **Step 2 - Story Data** — for each story (tabbed): a message, up to 3
-   memory images, a Spotify song.
+  memory images, an optional Spotify song.
 5. **Step 3 - PIN** — create and confirm a 4-digit PIN.
 6. Published — they can view it immediately (entering the PIN they just
    set) to confirm everything looks right before handing the gift over.
@@ -195,6 +170,11 @@ npm run lint       # ESLint - clean
 npm run build      # production build - clean
 ```
 
+The existing browser regression suites are `tests/memory-navigation.mjs` and
+`tests/home-refresh.mjs`. Both require an isolated test build and a local mock
+API; see [the test instructions](docs/loading-system.md#verification).
+Run them sequentially because they use the same mock API port.
+
 All three are clean, including the production build - fonts (Cormorant
 Garamond, Luxurious Roman) are self-hosted via `@fontsource/*` rather than
 fetched from Google Fonts at build time, so `npm run build` succeeds with
@@ -208,8 +188,10 @@ is identical.
 
 - **Tokens live in `localStorage`/`sessionStorage`, not httpOnly cookies**
   - this app calls the backend directly from Client Components.
-  `services/tokenStorage.ts` is the only file that would need to change to
-  harden this further.
+  Changing that design would require coordinated frontend/backend auth work.
+- **Published content stays in RAM** in the memory layout's provider, keyed by
+  memory ID and view token. Home/Story navigation shares the response; a full
+  refresh fetches again. Server-side revocation is observed on the next fetch.
 - **The PIN pad is fixed at exactly 4 digits**, matching the existing
   `PinInput`/`NumericKeypad` design.
 - **One cover image per story plus up to 3 additional memory images** -

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { StoryItem } from "@/types/memory";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,29 +10,25 @@ interface MemoryCarouselProps {
   stories: StoryItem[];
 }
 
-export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProps) {
+export default function MemoryCarousel({
+  memoryId,
+  stories,
+}: MemoryCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+
   const router = useRouter();
-
-  const isMountedRef = useRef(true);
-
-  useEffect(() => {
-    isMountedRef.current = true;
-
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
 
   const nextSlide = () => {
     if (currentIndex === stories.length - 1) return;
+
     setCurrentIndex(currentIndex + 1);
   };
 
   const prevSlide = () => {
     if (currentIndex === 0) return;
+
     setCurrentIndex(currentIndex - 1);
   };
 
@@ -40,7 +36,6 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
     setCurrentIndex(index);
   };
 
-  // ===== دوال اللمس =====
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
     setTouchEnd(e.targetTouches[0].clientX);
@@ -63,8 +58,12 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
     setTouchEnd(0);
   };
 
-  const handleReadStory = (storyId: string, e: React.MouseEvent) => {
+  const handleReadStory = (
+    storyId: string,
+    e: React.MouseEvent,
+  ) => {
     e.stopPropagation();
+
     router.push(`/m/${memoryId}/inf/${storyId}`);
   };
 
@@ -89,17 +88,19 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
 
           const isLeft =
             offset === -1 ||
-            (currentIndex === 0 && index === stories.length - 1);
+            (currentIndex === 0 &&
+              index === stories.length - 1);
 
           const isRight =
             offset === 1 ||
-            (currentIndex === stories.length - 1 && index === 0);
+            (currentIndex === stories.length - 1 &&
+              index === 0);
 
           let scale = 0.6;
           let rotateY = 0;
           let translateX = 0;
           let translateZ = -200;
-          let opacity = 0.3;
+          let opacity = 0;
           let zIndex = 1;
 
           if (isActive) {
@@ -114,21 +115,21 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
             rotateY = 30;
             translateX = -180;
             translateZ = -100;
-            opacity = 0.6;
+            opacity = 1;
             zIndex = 5;
           } else if (isRight) {
             scale = 0.7;
             rotateY = -30;
             translateX = 180;
             translateZ = -100;
-            opacity = 0.6;
+            opacity = 1;
             zIndex = 5;
           } else {
             scale = 0.5;
             rotateY = 0;
             translateX = 0;
             translateZ = -300;
-            opacity = 0.2;
+            opacity = 0;
             zIndex = 0;
           }
 
@@ -142,7 +143,6 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
                 zIndex,
                 transformStyle: "preserve-3d",
 
-                // Fix for mobile 3D compositing
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
                 willChange: "transform, opacity",
@@ -166,9 +166,16 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
-                <div className="absolute inset-0 bg-linear-to-t from-ruby/70 via-ruby/20 to-transparent" />
+                {/* White layer for side cards only */}
+                {!isActive && (
+                  <div className="absolute inset-0 z-1 bg-white/50 pointer-events-none" />
+                )}
 
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                {/* Ruby gradient */}
+                <div className="absolute inset-0 z-2 bg-linear-to-t from-ruby/70 via-ruby/20 to-transparent" />
+
+                {/* Text */}
+                <div className="absolute bottom-0 left-0 right-0 z-3 p-6 text-white">
                   <h3 className="font-heading text-2xl font-bold">
                     {memory.title}
                   </h3>
@@ -179,7 +186,9 @@ export default function MemoryCarousel({ memoryId, stories }: MemoryCarouselProp
 
                   {isActive && (
                     <button
-                      onClick={(e) => handleReadStory(memory.id, e)}
+                      onClick={(e) =>
+                        handleReadStory(memory.id, e)
+                      }
                       className="mt-3 inline-block px-4 py-2 rounded-full glass border border-white/30 text-sm font-heading cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-white/20"
                     >
                       Tap to Read Story
