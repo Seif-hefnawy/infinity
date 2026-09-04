@@ -1,0 +1,333 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  /* الألوان القديمة (ثابتة) */
+  --color-primary: #011E42;
+  --color-secondary: #F8C2CD;
+  --color-background: #FCE0E4;
+  --color-error: #FC2546;
+  --color-success: #22C55E;
+
+  /* الألوان الجديدة (إضافية) */
+  --color-ruby: #66021F;
+  --color-roseIvory: #FFE9EC;
+
+  --font-heading: "Quintessential", cursive;
+  --font-body: "Luxurious Roman", serif;
+
+  --animate-fade-in: fadeIn 0.8s ease-in-out;
+  --animate-fade-out: fadeOut 0.8s ease-in-out;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-scale-in: scaleIn 0.5s ease-out;
+  --animate-zoom-in: zoomIn 0.6s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-flip-open: flipOpen 0.8s ease-in-out;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-pulse-glow: pulseGlow 4s ease-in-out infinite;
+
+}
+
+/* ===== إخفاء شريط التمرير ===== */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== KEYFRAMES الأساسية ===== */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+  20%, 40%, 60%, 80% { transform: translateX(8px); }
+}
+@keyframes scaleIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes zoomIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes slideUp {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes flipOpen {
+  0% { transform: rotateY(0deg); opacity: 0; }
+  50% { transform: rotateY(90deg); opacity: 0.5; }
+  100% { transform: rotateY(0deg); opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.1; }
+  50% { transform: translateY(-80px) scale(1.2) rotate(15deg); opacity: 0.3; }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* .animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+} */
+
+/* ===== LAYERS ===== */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+  }
+  body {
+    background-color: var(--color-roseIvory);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FFE9EC;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #66021F;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FFE9EC;
+  }
+  ::selection {
+    background: #66021F;
+    color: #FFFFFF;
+  }
+}
+
+@layer components {
+  .glass {
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .glass-strong {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  .romantic-gradient {
+    background: linear-gradient(135deg, #FFE9EC 0%, #66021F 100%);
+  }
+  .ruby-gradient {
+    background: linear-gradient(135deg, #66021F 0%, #8a0a2e 100%);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+}
+
+/* ===== FALLING ROSES (زهور متساقطة) ===== */
+/* ===== FALLING ROSES - تعديل الـ translateY عشان يوصل لآخر الشاشة ===== */
+/* ===== FALLING ROSES - باستخدام % عشان تمتد مع طول المحتوى ===== */
+@keyframes fall-1 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  10% { opacity: 0.4; }
+  50% { transform: translateY(40vh) rotate(180deg) scale(1); opacity: 0.7; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(100vh) rotate(360deg) scale(0.9); opacity: 0; }
+}
+
+@keyframes fall-2 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { transform: translateY(50vh) rotate(-180deg) scale(1.1); opacity: 0.6; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(100vh) rotate(-360deg) scale(0.8); opacity: 0; }
+}
+
+@keyframes fall-3 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.7); opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { transform: translateY(45vh) rotate(200deg) scale(1); opacity: 0.5; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(100vh) rotate(400deg) scale(0.7); opacity: 0; }
+}
+
+@keyframes fall-4 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { transform: translateY(35vh) rotate(-150deg) scale(1.1); opacity: 0.5; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(100vh) rotate(-300deg) scale(0.9); opacity: 0; }
+}
+
+@keyframes fall-5 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { transform: translateY(55vh) rotate(220deg) scale(1); opacity: 0.5; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(100vh) rotate(440deg) scale(0.8); opacity: 0; }
+}
+
+@keyframes fall-6 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.7); opacity: 0; }
+  15% { opacity: 0.25; }
+  50% { transform: translateY(60vh) rotate(160deg) scale(0.9); opacity: 0.4; }
+  85% { opacity: 0.15; }
+  100% { transform: translateY(100vh) rotate(320deg) scale(0.7); opacity: 0; }
+}
+
+@keyframes fall-7 {
+  0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  15% { opacity: 0.3; }
+  50% { transform: translateY(65vh) rotate(-200deg) scale(1); opacity: 0.5; }
+  85% { opacity: 0.2; }
+  100% { transform: translateY(100vh) rotate(-400deg) scale(0.8); opacity: 0; }
+}
+.animate-fall-1 { animation: fall-1 12s ease-in-out infinite; }
+.animate-fall-2 { animation: fall-2 14s ease-in-out infinite 2s; }
+.animate-fall-3 { animation: fall-3 11s ease-in-out infinite 4s; }
+.animate-fall-4 { animation: fall-4 15s ease-in-out infinite 1s; }
+.animate-fall-5 { animation: fall-5 13s ease-in-out infinite 3s; }
+.animate-fall-6 { animation: fall-6 16s ease-in-out infinite 5s; }
+.animate-fall-7 { animation: fall-7 12s ease-in-out infinite 6s; }
+
+/* ===== PULSE SOFT (نبض خفيف) ===== */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* ===== FADE-IN-UP (للهيرو) ===== */
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+ .loader {
+  --color-1: #66021F;
+  --size: 2px;
+
+  width: calc(16 * var(--size));
+  height: calc(16 * var(--size));
+  border-radius: 50%;
+  display: block;
+  margin: calc(60 * var(--size)) auto calc(15 * var(--size));
+  position: relative;
+  background: var(--color-1);
+  transform-origin: calc(8 * var(--size)) calc(-44 * var(--size));
+  box-sizing: border-box;
+  animation: swing 1.4s ease-in-out infinite alternate;
+}
+
+/* ===== Animated Gradient ===== */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* ===== Pendulum Loader ===== */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.loader-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.loader-pendulum {
+  --color-1: #66021F;
+  --size: 2.5px;
+
+  width: calc(16 * var(--size));
+  height: calc(16 * var(--size));
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  background: var(--color-1);
+  transform-origin: calc(8 * var(--size)) calc(-44 * var(--size));
+  box-sizing: border-box;
+  animation: swing 1.4s ease-in-out infinite alternate;
+}
+
+.loader-pendulum::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: calc(8 * var(--size));
+  width: calc(1 * var(--size));
+  height: calc(52 * var(--size));
+  background: var(--color-1);
+  opacity: 0.4;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
