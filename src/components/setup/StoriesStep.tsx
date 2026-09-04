@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-
+import StoryDatePicker from "@/components/setup/StoryDatePicker";
 import { setupService } from "@/services/setupService";
 import { ApiClientError } from "@/services/apiClient";
 import { MAX_STORIES, type StoryDraft } from "./types";
@@ -388,37 +388,31 @@ export default function StoriesStep({
           </div>
 
           {/* Story Name */}
-          <input
-            type="text"
-            placeholder="Story name"
-            value={story.title}
-            onChange={(e) =>
-              updateStory(story.localId, {
-                title: e.target.value,
-              })
-            }
-            className="w-full px-3 py-2 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
-          />
-
-          {/* Story Date */}
-          <div className="relative w-full min-w-0 overflow-hidden">
-            {!story.date && (
-              <span className="story-date-placeholder">Story Date</span>
-            )}
+          <div className="space-y-2">
+            <label className="block text-sm text-ruby/70">Story name</label>
 
             <input
-              type="date"
-              required
-              data-placeholder="Story Date"
-              value={story.date}
+              type="text"
+              placeholder="First Date"
+              value={story.title}
               onChange={(e) =>
                 updateStory(story.localId, {
-                  date: e.target.value,
+                  title: e.target.value,
                 })
               }
-              className="story-date-input block w-full min-w-0 max-w-full h-10 box-border px-3 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
+              className="w-full px-3 py-2 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
             />
           </div>
+
+          {/* Story Date */}
+          <StoryDatePicker
+            value={story.date}
+            onChange={(date) =>
+              updateStory(story.localId, {
+                date,
+              })
+            }
+          />
 
           {/* Cover */}
           <StoryCoverUpload
