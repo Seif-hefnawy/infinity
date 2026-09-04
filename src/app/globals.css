@@ -301,27 +301,34 @@ html::-webkit-scrollbar {
 }
 
 
-.story-date-input {
+.story-date-wrapper {
   position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.story-date-input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.story-date-placeholder {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  pointer-events: none;
+  color: rgba(104, 21, 47, 0.4);
+  font-size: 0.875rem;
+}
+
+.story-date-input::-webkit-datetime-edit {
+  color: inherit;
 }
 
 .story-date-input:invalid::-webkit-datetime-edit {
   color: transparent;
-}
-
-.story-date-input:invalid::before {
-  content: attr(data-placeholder);
-  color: rgba(104, 21, 47, 0.4);
-  position: absolute;
-  left: 12px;
-}
-
-.story-date-input:focus::before,
-.story-date-input:valid::before {
-  content: "";
-}
-
-.story-date-input::-webkit-calendar-picker-indicator {
-  opacity: 1;
-  cursor: pointer;
 }
