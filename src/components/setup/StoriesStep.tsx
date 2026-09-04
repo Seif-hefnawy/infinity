@@ -401,20 +401,22 @@ export default function StoriesStep({
           />
 
           {/* Story Date */}
-          <div className="story-date-wrapper">
+          <div className="relative w-full min-w-0 overflow-hidden">
             {!story.date && (
               <span className="story-date-placeholder">Story Date</span>
             )}
 
             <input
               type="date"
+              required
+              data-placeholder="Story Date"
               value={story.date}
               onChange={(e) =>
                 updateStory(story.localId, {
                   date: e.target.value,
                 })
               }
-              className="story-date-input w-full h-10 px-3 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
+              className="story-date-input block w-full min-w-0 max-w-full h-10 box-border px-3 rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
             />
           </div>
 
