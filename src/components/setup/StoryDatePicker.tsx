@@ -44,7 +44,7 @@ export default function StoryDatePicker({
 
   return (
     <Field className="w-full">
-      <FieldLabel>Story date</FieldLabel>
+      <FieldLabel className="block text-sm text-ruby/70">Story date</FieldLabel>
 
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
@@ -52,7 +52,7 @@ export default function StoryDatePicker({
             <Button
               type="button"
               variant="outline"
-              className="h-10 w-full justify-start border-ruby/20 bg-white/70 px-3 font-normal text-ruby hover:bg-white/70"
+              className="h-10 w-full justify-start rounded-lg border border-ruby/20 bg-white/70 text-ruby text-sm focus:outline-none focus:border-ruby/50"
             >
               {date
                 ? date.toLocaleDateString("en-GB", {

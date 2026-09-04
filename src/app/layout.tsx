@@ -10,10 +10,6 @@ import '@fontsource/luxurious-roman/400.css';
 import './globals.css';
 
 import ClientFallingRoses from "@/components/shared/ClientFallingRoses";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: 'Infinity - Memories',
@@ -36,7 +32,7 @@ export default function RootLayout({
         // guaranteed, just without the network dependency.
         "--font-heading": "'Cormorant Garamond', serif",
         "--font-body": "'Luxurious Roman', serif",
-      } as React.CSSProperties} className={cn("font-sans", geist.variable)}
+      } as React.CSSProperties} 
     >
       <body>
       
