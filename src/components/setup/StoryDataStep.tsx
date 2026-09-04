@@ -14,6 +14,7 @@ const ACCEPTED_TYPES = [
   "image/webp",
   "image/heic",
   "image/heif",
+  "image/mpo",
 ];
 
 const ACCEPTED_EXTENSIONS = [
@@ -23,6 +24,7 @@ const ACCEPTED_EXTENSIONS = [
   ".webp",
   ".heic",
   ".heif",
+  ".mpo",
 ];
 
 const isAcceptedImage = (file: File) => {
@@ -95,7 +97,7 @@ function MemoryImagesUpload({
     }
 
     if (!isAcceptedImage(file)) {
-      setError("Use a JPEG, PNG, WEBP, HEIC, or HEIF image.");
+      setError("Use a JPEG, PNG, WEBP, HEIC, or HEIF image , or MPO image.");
       return;
     }
 

@@ -34,24 +34,18 @@ export default function StoryContent({
   const showNextImage = () => {
     if (images.length <= 1) return;
 
-    setActiveImageIndex(
-      (current) => (current + 1) % images.length
-    );
+    setActiveImageIndex((current) => (current + 1) % images.length);
   };
 
   const showPreviousImage = () => {
     if (images.length <= 1) return;
 
     setActiveImageIndex(
-      (current) =>
-        (current - 1 + images.length) % images.length
+      (current) => (current - 1 + images.length) % images.length,
     );
   };
 
-  const handleDragEnd = (
-    _: unknown,
-    info: { offset: { x: number } }
-  ) => {
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
     if (images.length <= 1) return;
 
     const swipeThreshold = 50;
@@ -92,6 +86,7 @@ export default function StoryContent({
           {paragraphs.map((paragraph, index) => (
             <motion.p
               key={index}
+              dir="auto"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -101,8 +96,8 @@ export default function StoryContent({
               }}
               className={
                 index === 0
-                  ? "font-serif text-xl leading-relaxed text-[#68152f] sm:text-2xl"
-                  : "text-sm leading-7 text-[#68152f]/65 sm:text-base sm:leading-8"
+                  ? "text-start font-serif text-xl leading-relaxed text-[#68152f] sm:text-2xl"
+                  : "text-start text-sm leading-7 text-[#68152f]/65 sm:text-base sm:leading-8"
               }
             >
               {paragraph}
@@ -117,8 +112,7 @@ export default function StoryContent({
             <div className="relative mx-auto w-full max-w-[520px] pb-9">
               <div className="relative aspect-[4/5] w-full">
                 {images.map((_, depth) => {
-                  const imageIndex =
-                    (activeImageIndex + depth) % images.length;
+                  const imageIndex = (activeImageIndex + depth) % images.length;
 
                   const image = images[imageIndex];
 
@@ -163,15 +157,9 @@ export default function StoryContent({
                         right: 0,
                       }}
                       dragElastic={0.18}
-                      onDragEnd={
-                        isFront
-                          ? handleDragEnd
-                          : undefined
-                      }
+                      onDragEnd={isFront ? handleDragEnd : undefined}
                       onClick={
-                        isFront && images.length > 1
-                          ? showNextImage
-                          : undefined
+                        isFront && images.length > 1 ? showNextImage : undefined
                       }
                       style={{
                         zIndex: images.length - depth,
@@ -218,9 +206,7 @@ export default function StoryContent({
                     <button
                       key={index}
                       type="button"
-                      onClick={() =>
-                        setActiveImageIndex(index)
-                      }
+                      onClick={() => setActiveImageIndex(index)}
                       aria-label={`Show photo ${index + 1}`}
                       className={`rounded-full transition-all duration-300 ${
                         index === activeImageIndex
